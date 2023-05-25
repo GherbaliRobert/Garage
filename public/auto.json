@@ -1,0 +1,18 @@
+[
+    {
+      "tip_auto": "Sedan",
+      "numar_auto": "B123XYZ",
+      "stare": "Bună"
+    },
+    {
+      "tip_auto": "SUV",
+      "numar_auto": "C456ABC",
+      "stare": "Defect"
+    },
+    {
+      "tip_auto": "Camion",
+      "numar_auto": "D789DEF",
+      "stare": "Excelentă"
+    }
+  ]
+  

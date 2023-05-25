@@ -1,0 +1,48 @@
+[
+  {
+    "tip_auto": "Platforma",
+    "numar_auto": "B123XYZ",
+    "stare": "Functionala"
+  },
+  {
+    "tip_auto": "Abroll",
+    "numar_auto": "C456ABC",
+    "stare": "Defect"
+  },
+  {
+    "tip_auto": "Camion",
+    "numar_auto": "D789DEF",
+    "stare": "Functionala"
+  },
+  {
+    "tip_auto": "Platforma",
+    "numar_auto": "E987PQR",
+    "stare": "Functionala"
+  },
+  {
+    "tip_auto": "SUV",
+    "numar_auto": "F654LMN",
+    "stare": "Defect"
+  },
+  
+  {
+    "tip_auto": "Platforma",
+    "numar_auto": "G321XYZ",
+    "stare": "Functionala"
+  },
+  {
+    "tip_auto": "Camion",
+    "numar_auto": "H654ABC",
+    "stare": "Functionala"
+  },
+  {
+    "tip_auto": "SUV",
+    "numar_auto": "I987DEF",
+    "stare": "Defect"
+  },
+  {
+    "tip_auto": "Camion",
+    "numar_auto": "J123PQR",
+    "stare": "Functionala"
+  }
+]

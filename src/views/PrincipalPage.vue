@@ -2,7 +2,7 @@
     <div class="indexPage">
       <div class="navTop">
         <img class="mecanziareImg" src="../assets/Mecanizare.png" alt="">
-        <select name="Auto" id="autoSrch" @change="onChange($event, 'auto')">
+        <select name="Auto" id="autoSrch" @change="onChange($event, 'auto')" v-model="test">
           <option value="Default">Selecteaza utilajul</option>
           <option value="Platforma">Platforma</option>
           <option value="Abroll">Abroll</option>
@@ -37,11 +37,17 @@
         typeFilter: "Default", 
         statusFilter: "Default", 
         searchFilter: "",
-        filteredCars: []
+        filteredCars: [],
+        test: 'Default'
       };
     },
     mounted() {
       this.incarcaDate();
+    },
+    watch: {
+      'test' () {
+        console.log('test')
+      }
     },
     methods: {
       onChange(event, type) {

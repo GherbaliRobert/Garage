@@ -2,20 +2,19 @@
     <div class="indexPage">
       <div class="navTop">
         <img class="mecanziareImg" src="../assets/Mecanizare.png" alt="">
-        <select name="Auto" id="autoSrch" v-model="typeFilter">
-          <option value="0">Selecteaza utilajul</option>
-          <option value="1">Platforma</option>
-          <option value="2">Abroll</option>
-          <option value="3">Perii mari</option>
-          <option value="4">Perii medi</option>
-          <option value="5">Perii mici</option>
+        <select name="Auto" id="autoSrch" @change="onChange($event, 'auto')">
+          <option value="Default">Selecteaza utilajul</option>
+          <option value="Platforma">Platforma</option>
+          <option value="Abroll">Abroll</option>
+          <option value="Camion">Camion</option>
+          <option value="SUV">SUV</option>
         </select>
-        <select name="status" id="status" v-model="statusFilter">
-          <option value="0">Toate</option>
-          <option value="1">Functionala</option>
-          <option value="2">Defect</option>
+        <select name="status" id="status" @change="onChange($event, 'status')">
+          <option value="Default">Toate</option>
+          <option value="Functionala">Functionala</option>
+          <option value="Defect">Defect</option>
         </select>
-        <input class="inputSrch" type="text" placeholder="Cauta utilaj" v-model="searchFilter">
+        <input class="inputSrch" type="text" placeholder="Cauta utilaj" @input="onChange($event, 'search')">
       </div>
       <div class="content">
         <h2>Listă de Mașini</h2>
@@ -35,30 +34,68 @@
     data() {
       return {
         masini: [],
-        typeFilter: "0", 
-        statusFilter: "0", 
-        searchFilter: "" 
+        typeFilter: "Default", 
+        statusFilter: "Default", 
+        searchFilter: "",
+        filteredCars: []
       };
-    },
-    computed: {
-      filteredCars() {
-        return this.masini.filter(masina => {
-          const tipFiltru = this.typeFilter === "0" || masina.tip_auto === this.typeFilter;
-          const stareFiltru = this.statusFilter === "0" || masina.stare === this.statusFilter;
-          const cautareFiltru = this.searchFilter === "" || masina.tip_auto.toLowerCase().includes(this.searchFilter.toLowerCase()) || masina.numar_auto.toLowerCase().includes(this.searchFilter.toLowerCase());
-          return tipFiltru && stareFiltru && cautareFiltru;
-        });
-      }
     },
     mounted() {
       this.incarcaDate();
     },
     methods: {
+      onChange(event, type) {
+        const value = event.target.value;
+        switch(type) {
+          case 'auto':
+            this.typeFilter = value;
+            if(this.statusFilter === 'Default') {
+              if(value !== 'Default') {
+                this.filteredCars = this.masini.filter(m => m.tip_auto === value);
+              } else {
+                this.filteredCars = this.masini;
+              }
+            } else {
+              if(value !== 'Default') {
+                this.filteredCars = this.masini.filter(m => m.tip_auto === value && m.stare === this.statusFilter);
+              } else {
+                this.filteredCars = this.masini.filter(m => m.stare === this.statusFilter);
+              }
+            }
+            break;
+          case 'status':
+            this.statusFilter = value;
+            if(this.typeFilter === 'Default') {
+              if(value !== 'Default') {
+                this.filteredCars = this.masini.filter(m => m.stare === value);
+              } else {
+                this.filteredCars = this.masini;
+              }
+            } else {
+              if(value !== 'Default') {
+                this.filteredCars = this.masini.filter(m => m.stare === value && m.tip_auto === this.typeFilter);
+              } else {
+                this.filteredCars = this.masini.filter(m => m.tip_auto === this.typeFilter);
+              }
+            }
+            break;
+          case 'search':
+            if(value !== '') {
+              this.filteredCars = this.filteredCars.filter(c => c.stare.includes(value) || c.numar_auto.includes(value) || c.tip_auto.includes(value))
+            } else {
+              this.filteredCars = this.masini;
+            }
+            break;
+          default:
+            break;
+        }
+      },
       incarcaDate() {
         fetch("/data/auto.json")
           .then(response => response.json())
           .then(data => {
             this.masini = data;
+            this.filteredCars = data;
           });
       }
     }
